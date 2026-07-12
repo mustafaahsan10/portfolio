@@ -1,39 +1,83 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import SkillGroup from "../components/SkillGroup.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import ContactForm from "../components/ContactForm.tsx";
+import { site, skills } from "../config";
 
-// Phase 0 placeholder. Phase 1 replaces this with the real hero + sections.
-const stack = ["Python", "TypeScript", "React", "LLMs", "RAG", "Next.js"];
+const all = (await getCollection("projects")).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999),
+);
+const featured = all.filter((p) => p.data.featured);
+const projects = featured.length ? featured : all;
 ---
 
 <BaseLayout>
-  <main class="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center px-6 py-24">
-    <p class="font-mono text-sm text-accent">~/whoami</p>
+  <Nav />
 
-    <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-      Mustafa Ahsan
-    </h1>
+  <main>
+    <Hero />
 
-    <p class="mt-4 font-mono text-lg text-muted">
-      <span class="text-accent">Software Engineer</span> · Generative AI
-    </p>
+    <Section id="projects" index="01" label="projects" title="Selected Projects">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </Section>
 
-    <p class="mt-6 max-w-xl text-base leading-relaxed text-muted">
-      I build LLM-powered products — from prototype to production. Full portfolio
-      launching soon.
-    </p>
+    <Section id="about" index="02" label="about" title="About">
+      <div class="max-w-2xl space-y-4 text-base leading-relaxed text-muted">
+        {/* EDIT ME — make this yours. */}
+        <p>
+          I'm a software engineer specializing in <span class="text-fg"
+            >generative AI</span
+          >. I design and build LLM-powered products end to end — retrieval
+          systems, agents, and evaluation pipelines on the backend, and the
+          React interfaces that make them feel effortless on the front.
+        </p>
+        <p>
+          I care about shipping things that are reliable, measurable, and
+          genuinely useful — not just demos. <span class="text-fg"
+            >[Add a personal line here — what you're focused on now, or what you
+            do outside of code.]</span
+          >
+        </p>
+      </div>
+    </Section>
 
-    <ul class="mt-10 flex flex-wrap gap-2.5 font-mono text-sm">
-      {
-        stack.map((item) => (
-          <li class="rounded border border-border bg-surface px-3 py-1 text-muted">
-            {item}
-          </li>
-        ))
-      }
-    </ul>
+    <Section id="skills" index="03" label="skills" title="Skills">
+      <div class="grid gap-4 sm:grid-cols-2">
+        {skills.map((g) => <SkillGroup group={g.group} items={g.items} />)}
+      </div>
+    </Section>
 
-    <footer class="mt-16 border-t border-border pt-6 font-mono text-xs text-muted">
-      <span class="text-accent">$</span> status: under construction — v0
-    </footer>
+    <Section id="contact" index="04" label="contact" title="Get in touch">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+        <div class="space-y-5 text-muted">
+          <p class="max-w-md leading-relaxed">
+            Looking for a software engineer who ships generative-AI products end
+            to end? I'd love to hear about the role.
+          </p>
+          <p class="font-mono text-sm">
+            <span class="text-accent">email:</span>
+            <a
+              href={`mailto:${site.email}`}
+              class="underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+              >{site.email}</a
+            >
+          </p>
+          <SocialLinks />
+        </div>
+
+        <ContactForm client:visible accessKey={site.web3formsKey} />
+      </div>
+    </Section>
   </main>
+
+  <Footer />
 </BaseLayout>

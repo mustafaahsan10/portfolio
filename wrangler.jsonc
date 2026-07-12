@@ -4,7 +4,8 @@
   "name": "portfolio",
   "compatibility_date": "2026-07-01",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "not_found_handling": "404-page"
   },
   // Keep the free <name>.<subdomain>.workers.dev URL enabled.
   "workers_dev": true

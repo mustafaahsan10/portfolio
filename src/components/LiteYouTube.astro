@@ -1,0 +1,66 @@
+---
+// Lightweight YouTube facade: shows the thumbnail + play button, and only
+// loads the (privacy-friendly, cookieless) iframe when the user clicks/presses.
+// Keeps the page fast — no YouTube JS until intent.
+interface Props {
+  id: string;
+  title?: string;
+}
+
+const { id, title = "Project walkthrough" } = Astro.props;
+const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+
+<div
+  class="lite-yt group relative aspect-video w-full cursor-pointer overflow-hidden rounded-lg border border-border bg-surface"
+  data-id={id}
+  role="button"
+  tabindex="0"
+  aria-label={`Play: ${title}`}
+>
+  <img
+    src={thumb}
+    alt={title}
+    loading="lazy"
+    class="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100"
+  />
+  <span class="pointer-events-none absolute inset-0 flex items-center justify-center">
+    <span
+      class="flex h-16 w-16 items-center justify-center rounded-full bg-bg/80 text-accent ring-1 ring-accent/50 transition-transform group-hover:scale-110"
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    </span>
+  </span>
+</div>
+
+<script>
+  function activate(el: HTMLElement) {
+    const id = el.getAttribute("data-id");
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    iframe.title = "Project walkthrough";
+    iframe.loading = "lazy";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.className = "absolute inset-0 h-full w-full";
+    el.replaceChildren(iframe);
+    el.style.cursor = "default";
+  }
+
+  document.querySelectorAll<HTMLElement>(".lite-yt").forEach((el) => {
+    el.addEventListener("click", () => activate(el), { once: true });
+    el.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate(el);
+        }
+      },
+      { once: true },
+    );
+  });
+</script>

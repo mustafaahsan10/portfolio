@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { site } from "../config";
 
 interface Props {
   title?: string;
@@ -7,9 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Mustafa Ahsan — Software Engineer · Generative AI",
-  description =
-    "Software engineer specializing in generative AI — building LLM-powered products with React and modern web tooling.",
+  title = `${site.name} — ${site.role} · ${site.focus}`,
+  description = site.tagline,
 } = Astro.props;
 
 // Canonical/OG URL. Astro.site is set in astro.config.mjs.
@@ -21,6 +21,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="author" content={site.name} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
