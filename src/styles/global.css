@@ -1,0 +1,56 @@
+/* Self-hosted variable fonts (Fontsource) */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+@import "tailwindcss";
+
+/* ---- Design tokens (Tailwind v4 CSS-first theme) ----
+   Dark-first "dev" aesthetic. One cyan accent, used sparingly.
+   Custom --color-* keys generate utilities: bg-bg, text-fg, text-muted,
+   border-border, bg-surface, text-accent, bg-accent, etc. */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-bg: #0d1117;        /* near-black background */
+  --color-surface: #0f1520;   /* raised panels / cards */
+  --color-border: #1e2633;    /* hairline borders */
+  --color-fg: #e6edf3;        /* primary text */
+  --color-muted: #8b949e;     /* secondary text */
+  --color-accent: #22d3ee;    /* cyan — links, CTAs, highlights */
+  --color-accent-2: #0891b2;  /* deeper cyan for hovers */
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background-color: var(--color-accent);
+    color: #04141a;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Respect reduced-motion everywhere (accessibility) */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
