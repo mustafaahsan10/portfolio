@@ -1,10 +1,14 @@
 import type { APIRoute } from "astro";
+// Astro 6+ removed Astro.locals.runtime.env — bindings come from here now.
+import { env } from "cloudflare:workers";
 import { buildSystemPrompt } from "../../data/assistant";
 
 // On-demand (server) route — everything else stays static.
 export const prerender = false;
 
-const MODEL = "@cf/meta/llama-3.1-8b-instruct";
+// Current Workers AI text model (fast + cheap on the free tier). For higher
+// answer quality you can swap to "@cf/meta/llama-3.3-70b-instruct-fp8-fast".
+const MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
 const MAX_MESSAGE_LEN = 1000;
 const MAX_HISTORY = 8;
 
@@ -20,9 +24,9 @@ function json(data: unknown, status = 200): Response {
   });
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
-  // Cloudflare Workers AI binding, injected by the adapter at the edge.
-  const ai = (locals as any).runtime?.env?.AI;
+export const POST: APIRoute = async ({ request }) => {
+  // Cloudflare Workers AI binding (from cloudflare:workers env).
+  const ai = (env as any)?.AI;
   if (!ai) {
     return json(
       { error: "The assistant isn't available in this environment." },
@@ -68,7 +72,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
         ? result.response.trim()
         : "Sorry — I couldn't generate an answer to that. Try rephrasing, or reach out via the contact form.";
     return json({ answer });
-  } catch {
+  } catch (err) {
+    console.error("Workers AI error:", err);
     return json(
       { error: "The assistant is temporarily unavailable. Please try the contact form." },
       502,
