@@ -31,11 +31,30 @@ const handle = site.name.split(" ")[0].toLowerCase();
       }
     </ul>
 
-    <a
-      href="#contact"
-      class="rounded border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-sm text-accent transition-colors hover:bg-accent/20"
-    >
-      Get in touch
-    </a>
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        data-cmdk
+        aria-label="Open command menu"
+        class="hidden items-center gap-1 rounded border border-border px-2.5 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-accent sm:flex"
+      >
+        <span aria-hidden="true">⌘</span>K
+      </button>
+
+      <a
+        href="#contact"
+        class="rounded border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-sm text-accent transition-colors hover:bg-accent/20"
+      >
+        Get in touch
+      </a>
+    </div>
   </nav>
 </header>
+
+<script>
+  document.querySelectorAll("[data-cmdk]").forEach((btn) =>
+    btn.addEventListener("click", () =>
+      window.dispatchEvent(new Event("cmdk:open")),
+    ),
+  );
+</script>

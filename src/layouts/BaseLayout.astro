@@ -44,5 +44,58 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
   </head>
   <body class="min-h-dvh font-sans antialiased">
     <slot />
+
+    <script>
+      // Text scramble / decode effect for [data-scramble] elements (plain text only).
+      const CHARS = "!<>-_\\/[]{}=+*^?#·:";
+      function scramble(el: HTMLElement) {
+        const text = el.dataset.text ?? el.textContent ?? "";
+        el.dataset.text = text;
+        const queue = Array.from(text).map((to) => {
+          const start = Math.floor(Math.random() * 18);
+          return { to, start, end: start + 10 + Math.floor(Math.random() * 18), char: "" };
+        });
+        let frame = 0;
+        const tick = () => {
+          let out = "";
+          let done = 0;
+          for (const q of queue) {
+            if (frame >= q.end) {
+              done++;
+              out += q.to;
+            } else if (frame >= q.start) {
+              if (!q.char || Math.random() < 0.28)
+                q.char = CHARS[Math.floor(Math.random() * CHARS.length)];
+              out += `<span class="scramble-char">${q.char}</span>`;
+            }
+          }
+          el.innerHTML = out;
+          if (done < queue.length) {
+            frame++;
+            requestAnimationFrame(tick);
+          } else {
+            el.textContent = text;
+          }
+        };
+        tick();
+      }
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = document.querySelectorAll<HTMLElement>("[data-scramble]");
+      if (!reduce && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                scramble(e.target as HTMLElement);
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.4 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

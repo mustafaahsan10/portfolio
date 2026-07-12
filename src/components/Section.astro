@@ -15,7 +15,9 @@ const { id, index, label, title } = Astro.props;
       <span class="text-accent">{index}</span>
       <span class="text-muted">// {label}</span>
     </p>
-    <h2 class="mb-10 text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
+    <h2 class="mb-10 text-2xl font-bold tracking-tight sm:text-3xl" data-scramble>
+      {title}
+    </h2>
     <slot />
   </div>
 </section>

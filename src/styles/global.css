@@ -89,3 +89,34 @@
   border-radius: 4px;
   padding: 0.1rem 0.35rem;
 }
+
+/* Text-scramble decode effect */
+.scramble-char {
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+
+/* Command palette (cmdk) */
+[cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  user-select: none;
+}
+[cmdk-item][data-selected="true"] {
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-accent);
+}
+[cmdk-group-heading] {
+  padding: 0.6rem 0.75rem 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--color-muted) 70%, transparent);
+}

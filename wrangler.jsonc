@@ -1,12 +1,20 @@
 {
-  // Cloudflare Workers config for a STATIC Astro site (no SSR adapter needed).
-  // `npx wrangler deploy` uploads ./dist as static assets to the "portfolio" Worker.
+  // Source config for the HYBRID Astro site (static pages + the server-rendered
+  // /api/chat route via @astrojs/cloudflare). The adapter reads this at build,
+  // then emits the resolved deploy config to dist/server/wrangler.json and a
+  // .wrangler/deploy redirect, so `npx wrangler deploy` (the Workers Build
+  // command) picks it up automatically — no dashboard changes needed.
   "name": "portfolio",
   "compatibility_date": "2026-07-01",
+
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
-  // Keep the free <name>.<subdomain>.workers.dev URL enabled.
+
+  // Workers AI binding powers the "Ask my portfolio" assistant (free daily tier).
+  "ai": { "binding": "AI" },
+
+  // Keep the free <name>.<subdomain>.workers.dev URL.
   "workers_dev": true
 }
