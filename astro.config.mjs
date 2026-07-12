@@ -6,9 +6,9 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: update to your final domain once chosen (e.g. https://mustafa-ahsan.pages.dev
-  // or a custom domain). Used for canonical URLs, Open Graph, and the sitemap.
-  site: 'https://mustafa-ahsan.pages.dev',
+  // Live on Cloudflare Workers. Swap to a custom domain later if you buy one.
+  // Used for canonical URLs, Open Graph, and the sitemap.
+  site: 'https://portfolio.mustafaahsan2002.workers.dev',
 
   vite: {
     plugins: [tailwindcss()]

@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers config for a STATIC Astro site (no SSR adapter needed).
+  // `npx wrangler deploy` uploads ./dist as static assets to the "portfolio" Worker.
+  "name": "portfolio",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist"
+  },
+  // Keep the free <name>.<subdomain>.workers.dev URL enabled.
+  "workers_dev": true
+}
