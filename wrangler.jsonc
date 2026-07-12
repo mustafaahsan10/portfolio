@@ -6,6 +6,9 @@
   // command) picks it up automatically — no dashboard changes needed.
   "name": "portfolio",
   "compatibility_date": "2026-07-01",
+  // Provides the Node.js `process` global etc. that Astro's server runtime
+  // uses — without this the worker throws "process is not defined" per request.
+  "compatibility_flags": ["nodejs_compat"],
 
   "assets": {
     "directory": "./dist",
