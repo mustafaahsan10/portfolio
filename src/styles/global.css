@@ -1,6 +1,6 @@
 /* Self-hosted variable fonts (Fontsource) */
 @import "@fontsource-variable/inter";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist-mono";
 
 @import "tailwindcss";
 
@@ -10,13 +10,13 @@
    border-border, bg-surface, text-accent, bg-accent, etc. */
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
 
-  --color-bg: #0d1117;        /* near-black background */
-  --color-surface: #0f1520;   /* raised panels / cards */
-  --color-border: #1e2633;    /* hairline borders */
-  --color-fg: #e6edf3;        /* primary text */
-  --color-muted: #8b949e;     /* secondary text */
+  --color-bg: #000000;        /* AMOLED true black */
+  --color-surface: #0b0b0c;   /* raised panels / cards */
+  --color-border: #26262b;    /* hairline borders */
+  --color-fg: #f2f2f2;        /* primary text */
+  --color-muted: #8b8b8b;     /* secondary text */
   --color-accent: #22d3ee;    /* cyan — links, CTAs, highlights */
   --color-accent-2: #0891b2;  /* deeper cyan for hovers */
 }
@@ -33,6 +33,12 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Developer look: monospace headings (Geist Mono); body stays Inter */
+  h1, h2, h3 {
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
   }
   ::selection {
     background-color: var(--color-accent);
