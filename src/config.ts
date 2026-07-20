@@ -9,7 +9,7 @@ export const site = {
   role: "Software Engineer",
   focus: "Generative AI",
   tagline:
-    "I build LLM-powered products — from retrieval pipelines and agents to the React front-ends that make them usable.",
+    "I turn large language models into products people actually use — from retrieval and agents to the interfaces that make them click.",
 
   // TODO: confirm the email you want publicly shown on the contact CTA.
   // This will be visible on your live site.
@@ -20,13 +20,12 @@ export const site = {
 
   socials: {
     github: "https://github.com/mustafaahsan10",
-    // TODO: your LinkedIn profile URL
-    linkedin: "https://www.linkedin.com/in/your-handle",
+    linkedin: "https://www.linkedin.com/in/mustafa-ahsan-b494721b2/",
   },
 
-  // TODO: get a free access key at https://web3forms.com (enter your email,
-  // paste the key here). Until then the contact form falls back to email.
-  web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY",
+  // Web3Forms access key (safe to be public — it only allows submitting to
+  // your form). Delivers contact-form messages to your email.
+  web3formsKey: "408fd8a5-4635-4b3e-bbda-f8b2c2dd2ac2",
 };
 
 // Anchor nav (single-page sections)
@@ -37,23 +36,26 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ];
 
-// TODO: tweak these to match your real stack. Grouped so recruiters
-// can keyword-scan quickly.
+// Grouped so recruiters can keyword-scan quickly.
 export const skills: { group: string; items: string[] }[] = [
   {
     group: "Gen AI / LLMs",
-    items: ["RAG", "Agents", "OpenAI & Anthropic APIs", "LangChain", "Vector DBs", "Prompt engineering", "Fine-tuning"],
+    items: ["RAG", "AI Agents", "Prompt engineering", "Fine-tuning (vision/multimodal)", "LangChain", "LangGraph", "OpenAI & Anthropic APIs"],
+  },
+  {
+    group: "Vector & Databases",
+    items: ["pgvector", "Qdrant", "PostgreSQL", "SQL"],
   },
   {
     group: "Languages",
-    items: ["Python", "TypeScript", "JavaScript", "SQL"],
+    items: ["Python", "TypeScript", "JavaScript"],
   },
   {
     group: "Frameworks",
-    items: ["React", "Next.js", "FastAPI", "Node.js", "Astro"],
+    items: ["FastAPI", "Node.js", "React", "Next.js", "Astro"],
   },
   {
-    group: "Tools & Cloud",
-    items: ["Docker", "Git", "Postgres", "AWS", "Cloudflare"],
+    group: "Automation & Cloud",
+    items: ["n8n", "Docker", "Terraform", "Azure", "GCP", "Cloudflare", "Git"],
   },
 ];

@@ -6,13 +6,14 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, summary, tech } = project.data;
+const { title, summary, tech, label } = project.data;
 ---
 
 <a
   href={`/projects/${project.id}/`}
   class="group flex flex-col rounded-lg border border-border bg-surface p-6 transition-colors hover:border-accent/60"
 >
+  {label && <span class="mb-2 font-mono text-xs text-accent">{label}</span>}
   <h3
     class="text-lg font-semibold tracking-tight transition-colors group-hover:text-accent"
   >

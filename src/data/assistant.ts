@@ -9,25 +9,34 @@ import { site, skills } from "../config";
 
 // EDIT ME: your bio in the assistant's words.
 const BIO = `
-${site.name} is a software engineer specializing in generative AI. He builds
-LLM-powered products end to end — retrieval-augmented generation (RAG) systems,
-agents, and evaluation pipelines on the backend, and React/Next.js front-ends on
-the client. He is currently open to full-time software engineering roles focused
-on generative AI.
+${site.name} is a software engineer at Systems Limited in Lahore, Pakistan,
+specializing in generative AI. He builds conversational AI and automation for
+enterprise clients — including chatbots for MENA-region telecoms such as Zain and
+STC, and for banks — using RAG, prompt engineering, and n8n automation. He began
+freelancing in 2024 and now works full-time. He is open to full-time software
+engineering roles focused on generative AI.
 `.trim();
 
 // EDIT ME: keep in sync with src/content/projects/*.md
 const PROJECTS = `
-- RAG Knowledge Assistant: retrieval-augmented chat over private docs with inline
-  citations and streaming answers. Stack: Python, FastAPI, OpenAI, pgvector,
-  React. Cut internal document lookup time by ~70% in a 40-user pilot.
-- LLM Evaluation Harness: automated eval framework scoring prompt/model changes
-  against a golden dataset (exact-match, semantic similarity, LLM-as-judge),
-  running in CI to block regressions. Stack: Python, Anthropic API, Pytest,
-  Streamlit.
-- AI Writing Product (Next.js): full-stack app with server-side streaming AI
-  generations, authentication, and usage-based rate limiting. Stack: Next.js,
-  TypeScript, React, OpenAI, Postgres.
+- Voice conversational-AI platform: a multi-tenant, voice-driven AI companion for
+  VR and web. Mustafa built the hierarchical hybrid-search RAG engine and the
+  document-ingestion pipeline (Qdrant + Whoosh + OpenAI embeddings), and the
+  Next.js/React admin dashboard (multi-tenant management, role-based access,
+  analytics). It is a larger platform built with a team.
+- Thymus Alpha (AI medical learning assistant): a RAG-powered study assistant
+  (FastAPI + Next.js) that answers medical questions from a curated corpus,
+  generates multiple-choice questions with explanations, and retrieves relevant
+  diagrams and English/Urdu videos — using an intent router over GPT-4o-mini and
+  Qdrant.
+- n8n workflow automation: end-to-end automation of enterprise conversational and
+  business workflows built in n8n.
+- Floorplan-to-3D (final-year project): Mustafa built the Python/OpenCV pipeline
+  that extracted coordinates from real-world floorplans to power a 3D mobile view
+  (he worked on the computer-vision / Python side, not the mobile app itself).
+- Vision fine-tuning pipeline: built multimodal fine-tuning datasets that teach
+  GPT-4o to extract structured measurement data from spec-sheet images into a
+  defined JSON schema.
 `.trim();
 
 const skillsFlat = skills
@@ -57,8 +66,8 @@ ${PROJECTS}
 
 // Shown as clickable chips in the chat UI (safe to expose to the client).
 export const SUGGESTED_QUESTIONS = [
-  "What's his experience with RAG?",
-  "Is he a fit for a senior AI engineer role?",
-  "What did he build with Next.js?",
+  "What's his experience with RAG chatbots?",
+  "Has he built AI for enterprise clients?",
+  "What did he build on the voice-AI platform?",
   "What's his core tech stack?",
 ];

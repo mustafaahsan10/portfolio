@@ -15,12 +15,16 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(), // one-liner shown on the card
+    label: z.string().optional(), // context tag, e.g. "Freelance", "Client work", "FYP"
     tech: z.array(z.string()),
     role: z.string().optional(),
     outcome: z.string().optional(), // headline impact/result
     demoUrl: optionalUrl,
     githubUrl: optionalUrl,
     youtubeId: z.string().optional(), // 11-char YouTube video id for the walkthrough
+    screenshots: z
+      .array(z.object({ src: z.string(), alt: z.string() }))
+      .optional(),
     featured: z.boolean().default(false),
     order: z.number().default(999), // lower = shown first
   }),
