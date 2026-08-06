@@ -15,7 +15,6 @@ export const site = {
   // This will be visible on your live site.
   email: "mustafaahsan2002@gmail.com",
 
-  // TODO: drop your CV at public/resume.pdf (then this link works).
   resumeUrl: "/resume.pdf",
 
   socials: {
