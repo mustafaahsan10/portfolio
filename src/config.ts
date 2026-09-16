@@ -39,11 +39,15 @@ export const nav = [
 export const skills: { group: string; items: string[] }[] = [
   {
     group: "Gen AI / LLMs",
-    items: ["RAG", "AI Agents", "Prompt engineering", "Fine-tuning (vision/multimodal)", "LangChain", "LangGraph", "OpenAI & Anthropic APIs"],
+    items: ["RAG", "AI Agents", "Deep agents", "LangChain", "LangGraph", "OpenAI & Anthropic APIs", "Azure OpenAI", "Token streaming", "Fine-tuning (vision/multimodal)"],
   },
   {
-    group: "Vector & Databases",
-    items: ["pgvector", "Qdrant", "PostgreSQL", "SQL"],
+    group: "Retrieval & Data",
+    items: ["pgvector", "Qdrant", "Neo4j", "Hybrid search", "Re-ranking", "RBAC-aware retrieval", "PostgreSQL", "SQL"],
+  },
+  {
+    group: "Evaluation & Ops",
+    items: ["Client UAT", "Production tracing", "Langfuse", "Prompt/response caching", "Model routing & benchmarking"],
   },
   {
     group: "Languages",
@@ -55,6 +59,6 @@ export const skills: { group: string; items: string[] }[] = [
   },
   {
     group: "Automation & Cloud",
-    items: ["n8n", "Docker", "Terraform", "Azure", "GCP", "Cloudflare", "Git"],
+    items: ["n8n", "OpenWebUI", "Docker", "Terraform", "Azure", "Microsoft Graph / Entra ID", "GCP", "Cloudflare", "Git"],
   },
 ];

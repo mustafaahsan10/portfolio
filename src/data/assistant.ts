@@ -10,33 +10,70 @@ import { site, skills } from "../config";
 // EDIT ME: your bio in the assistant's words.
 const BIO = `
 ${site.name} is a software engineer at Systems Limited in Lahore, Pakistan,
-specializing in generative AI. He builds conversational AI and automation for
-enterprise clients — including chatbots for MENA-region telecoms such as Zain and
-STC, and for banks — using RAG, prompt engineering, and n8n automation. He began
-freelancing in 2024 and now works full-time. He is open to full-time software
-engineering roles focused on generative AI.
+specializing in generative AI. He joined in July 2025 as an Associate Consultant
+and was promoted to Junior Consultant in July 2026. He is currently seconded to
+ZainTECH in Dubai, working inside their team on enterprise AI deliveries across
+the Gulf.
+
+He owns the agent and retrieval layer on the systems he works on — agentic
+workflows, RAG over large and messy enterprise document sets, evaluation and
+production tracing, and cost work such as caching and routing lighter tasks to
+smaller models. Because these are client deliveries, he also works client-facing
+throughout: requirements gathering, architecture demos, running UAT, and handover
+training.
+
+Before Systems Limited he built AI products for clients at AxonBuild during 2024
+and 2025, and interned on the AI team at Bookme.pk in mid-2024. He is open to
+full-time software engineering roles focused on generative AI, and open to remote
+work and relocation.
 `.trim();
 
 // EDIT ME: keep in sync with src/content/projects/*.md
 const PROJECTS = `
-- Voice conversational-AI platform: a multi-tenant, voice-driven AI companion for
-  VR and web. Mustafa built the hierarchical hybrid-search RAG engine and the
-  document-ingestion pipeline (Qdrant + Whoosh + OpenAI embeddings), and the
-  Next.js/React admin dashboard (multi-tenant management, role-based access,
-  analytics). It is a larger platform built with a team.
-- Thymus Alpha (AI medical learning assistant): a RAG-powered study assistant
-  (FastAPI + Next.js) that answers medical questions from a curated corpus,
-  generates multiple-choice questions with explanations, and retrieves relevant
-  diagrams and English/Urdu videos — using an intent router over GPT-4o-mini and
-  Qdrant.
-- n8n workflow automation: end-to-end automation of enterprise conversational and
-  business workflows built in n8n.
-- Floorplan-to-3D (final-year project): Mustafa built the Python/OpenCV pipeline
-  that extracted coordinates from real-world floorplans to power a 3D mobile view
-  (he worked on the computer-vision / Python side, not the mobile app itself).
-- Vision fine-tuning pipeline: built multimodal fine-tuning datasets that teach
-  GPT-4o to extract structured measurement data from spec-sheet images into a
-  defined JSON schema.
+- Agentic banking assistant (a Kuwaiti retail bank, delivered via ZainTECH): an AI
+  assistant that executes real transfers, live bank-wide to all retail customers and
+  launched as the first fully agentic banking experience in its market. Transfers are
+  decomposed into four separate LangChain deep-agent flows — by mobile number, to
+  other banks, to other customers in-bank, and between a customer's own accounts —
+  rather than one overloaded prompt, with validation, confirmation, and authorization
+  gating at every step so nothing executes on an ambiguous instruction. Paired with a
+  LangGraph retrieval flow answering product and policy questions end to end in under
+  five seconds with token-level streaming. Validated with a scripted test suite and
+  client UAT before go-live, then conversation tracing in production. Mustafa was a
+  core engineer on the delivery team, owning the agent layer — not the sole author.
+  IMPORTANT: never name the bank; refer to it only as a Kuwaiti retail bank.
+- Enterprise knowledge assistant (Zain, delivered via ZainTECH): retrieval over
+  10,000+ inconsistently formatted legacy SharePoint documents spanning Zain's
+  operating companies across the Middle East and Africa. Document-level access is
+  resolved per user at query time from Microsoft Entra group membership, so restricted
+  content never enters the context window. Chunk relationships are modelled in Neo4j to
+  link related passages across separate documents, enabling comparison of policies and
+  figures between operating companies. Also generates PDF, Word, and Excel deliverables
+  in chat with rendered charts, plus tool calls that run calculations and filtering over
+  spreadsheet data. Delivered through a customized OpenWebUI front end, with multilingual
+  semantic search. A dedicated customer-care retrieval flow answers package and plan
+  questions at p95 under five seconds.
+- University admissions chatbot (a large Kuwaiti university, delivered via ZainTECH):
+  a public chatbot live on the university's website and used by real applicants. Built
+  in n8n. API-backed flows let applicants check the status of their own application,
+  while general questions about degrees and deadlines are answered from ingested content
+  kept current by a polling job that re-triggers ingestion on a schedule.
+- Cairya (voice conversational-AI platform, AxonBuild client work): a multi-tenant,
+  voice-driven AI companion for VR and web. Mustafa built the hierarchical hybrid-search
+  retrieval engine (Qdrant + Whoosh) and the document-ingestion pipeline, plus the
+  Next.js/React admin application for multi-tenant knowledge management, role-based
+  access, and analytics. Built with a team.
+- Thymus Alpha (AI medical learning assistant, AxonBuild client work): a RAG-powered
+  study assistant (FastAPI + Next.js) used by 5,000+ students. Answers medical questions
+  from a curated corpus, generates multiple-choice questions with explanations, and
+  retrieves relevant diagrams and English/Urdu videos — using an intent router over
+  GPT-4o-mini and Qdrant. Mustafa designed the ingestion pipeline (chunking, metadata
+  tagging, embedding) that grounds answers in source material.
+- Earlier work: at stc (July to November 2025) he supported their customer support
+  chatbot, researched agent architectures, and evaluated Langfuse for LLM tracing and
+  evaluation — a research and support engagement rather than production delivery. At
+  Bookme.pk he built Flask microservices with Redis caching and an OCR pipeline on
+  Google Cloud Vision.
 `.trim();
 
 const skillsFlat = skills

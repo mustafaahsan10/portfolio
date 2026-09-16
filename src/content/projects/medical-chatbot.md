@@ -2,9 +2,10 @@
 title: "Thymus Alpha — AI Medical Learning Assistant"
 summary: "A RAG-powered study assistant that answers medical questions from a trusted corpus, generates MCQs with explanations, and surfaces relevant diagrams and English/Urdu videos."
 tech: ["Python", "FastAPI", "OpenAI (GPT-4o-mini)", "Qdrant", "Next.js", "React"]
-outcome: "An end-to-end medical study assistant that combines grounded Q&A, auto-generated quizzes, and multimodal (diagram + bilingual video) retrieval in one flow."
+outcome: "An end-to-end medical study assistant that combines grounded Q&A, auto-generated quizzes, and multimodal (diagram + bilingual video) retrieval in one flow — used by 5,000+ students."
+label: "Client work — AxonBuild"
 featured: true
-order: 2
+order: 4
 screenshots:
   - src: "/projects/medical-chatbot/01-home.jpg"
     alt: "Home screen — pick a topic or ask your own question"
