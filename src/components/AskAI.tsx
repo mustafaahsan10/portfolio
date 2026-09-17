@@ -62,7 +62,7 @@ export default function AskAI({ suggestions }: Props) {
       await reveal(data.answer as string);
     } catch {
       setError(
-        "The assistant is unavailable right now — please use the contact form below.",
+        "The assistant is unavailable right now. Please use the contact form below.",
       );
     } finally {
       setLoading(false);
@@ -89,7 +89,7 @@ export default function AskAI({ suggestions }: Props) {
         {empty && (
           <div className="text-sm leading-relaxed text-muted">
             Ask me anything about Mustafa's experience, projects, or fit for a
-            role — I answer from his real background.
+            role. I answer from his real background.
           </div>
         )}
 

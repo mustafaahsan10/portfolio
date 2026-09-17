@@ -18,7 +18,7 @@ const { Content } = await render(project);
 const d = project.data;
 ---
 
-<BaseLayout title={`${d.title} — ${site.name}`} description={d.summary}>
+<BaseLayout title={`${d.title} · ${site.name}`} description={d.summary}>
   <main class="mx-auto max-w-3xl px-6 py-16 sm:py-24">
     <a
       href="/#projects"
@@ -84,7 +84,7 @@ const d = project.data;
     {
       d.youtubeId && (
         <div class="mt-10">
-          <LiteYouTube id={d.youtubeId} title={`${d.title} — walkthrough`} />
+          <LiteYouTube id={d.youtubeId} title={`${d.title} walkthrough`} />
         </div>
       )
     }

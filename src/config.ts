@@ -9,7 +9,7 @@ export const site = {
   role: "Software Engineer",
   focus: "Generative AI",
   tagline:
-    "I turn large language models into products people actually use — from retrieval and agents to the interfaces that make them click.",
+    "I turn large language models into products people actually use, from retrieval and agents to the interfaces that make them click.",
 
   // TODO: confirm the email you want publicly shown on the contact CTA.
   // This will be visible on your live site.

@@ -70,7 +70,7 @@ export const POST: APIRoute = async ({ request }) => {
     const answer =
       typeof result?.response === "string" && result.response.trim()
         ? result.response.trim()
-        : "Sorry — I couldn't generate an answer to that. Try rephrasing, or reach out via the contact form.";
+        : "Sorry, I couldn't generate an answer to that. Try rephrasing, or reach out via the contact form.";
     return json({ answer });
   } catch (err) {
     console.error("Workers AI error:", err);

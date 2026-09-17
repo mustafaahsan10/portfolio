@@ -35,11 +35,11 @@ export default function ContactForm({ accessKey }: Props) {
         form.reset();
       } else {
         setStatus("error");
-        setErrorMsg(data.message || "Something went wrong — please email me directly.");
+        setErrorMsg(data.message || "Something went wrong. Please email me directly.");
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Network error — please email me directly.");
+      setErrorMsg("Network error. Please email me directly.");
     }
   }
 
@@ -48,7 +48,7 @@ export default function ContactForm({ accessKey }: Props) {
       <div className="rounded-lg border border-accent/40 bg-accent/5 p-6">
         <p className="font-mono text-sm text-accent">// message sent</p>
         <p className="mt-2 text-fg">
-          Thanks — your message is on its way. I'll get back to you soon.
+          Thanks, your message is on its way. I'll get back to you soon.
         </p>
       </div>
     );
@@ -99,7 +99,7 @@ export default function ContactForm({ accessKey }: Props) {
           required
           rows={5}
           className={inputCls}
-          placeholder="Hi Mustafa — we're hiring a…"
+          placeholder="Hi Mustafa, we're hiring a…"
         />
       </label>
 

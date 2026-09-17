@@ -15,7 +15,7 @@ and was promoted to Junior Consultant in July 2026. He is currently seconded to
 ZainTECH in Dubai, working inside their team on enterprise AI deliveries across
 the Gulf.
 
-He owns the agent and retrieval layer on the systems he works on — agentic
+He owns the agent and retrieval layer on the systems he works on: agentic
 workflows, RAG over large and messy enterprise document sets, evaluation and
 production tracing, and cost work such as caching and routing lighter tasks to
 smaller models. Because these are client deliveries, he also works client-facing
@@ -34,10 +34,10 @@ const PROJECTS = `
   assistant that executes real transfers, live bank-wide to all retail customers and
   serving 100+ customers a day. It is the first fully agentic banking experience in its
   market: other banks had assistants that answer questions, none had one that executes
-  the transaction. Built from nothing in roughly four months — there was no previous
+  the transaction. Built from nothing in roughly four months. There was no previous
   chatbot or IVR to extend. Transfers are
-  decomposed into four separate LangGraph agent flows — by mobile number, to
-  other banks, to other customers in-bank, and between a customer's own accounts —
+  decomposed into four separate LangGraph agent flows, by mobile number, to
+  other banks, to other customers in-bank, and between a customer's own accounts,
   rather than one overloaded prompt, with validation, confirmation, and authorization
   gating at every step so nothing executes on an ambiguous instruction. Paired with a
   LangGraph retrieval flow answering product and policy questions end to end in under
@@ -51,7 +51,7 @@ const PROJECTS = `
   multinational telecom group. Document-level access is
   resolved per user at query time from Microsoft Entra group membership, so restricted
   content is never retrieved at all and cannot enter the context window. Metadata boosts
-  applied above a relevance floor — rather than hard filters — let one ranking serve both
+  applied above a relevance floor, rather than hard filters, let one ranking serve both
   narrow single-country questions and cross-company comparisons. Also generates PDF, Word,
   and Excel deliverables in chat with rendered charts, plus tool calls that run
   calculations and filtering over spreadsheet data. Delivered through a forked OpenWebUI
@@ -72,12 +72,12 @@ const PROJECTS = `
 - Thymus Alpha (AI medical learning assistant, AxonBuild client work): a RAG-powered
   study assistant (FastAPI + Next.js) used by 5,000+ students. Answers medical questions
   from a curated corpus, generates multiple-choice questions with explanations, and
-  retrieves relevant diagrams and English/Urdu videos — using an intent router over
+  retrieves relevant diagrams and English/Urdu videos, using an intent router over
   GPT-4o-mini and Qdrant. Mustafa designed the ingestion pipeline (chunking, metadata
   tagging, embedding) that grounds answers in source material.
 - Earlier work: at stc (July to November 2025) he supported their customer support
   chatbot, researched agent architectures, and evaluated Langfuse for LLM tracing and
-  evaluation — a research and support engagement rather than production delivery. At
+  evaluation. That was a research and support engagement rather than production delivery. At
   Bookme.pk he built Flask microservices with Redis caching and an OCR pipeline on
   Google Cloud Vision.
 `.trim();
