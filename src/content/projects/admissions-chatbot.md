@@ -1,57 +1,70 @@
 ---
 title: "University Admissions Chatbot"
-summary: "A public chatbot on a Kuwaiti university's website where applicants check their own application status and get answers about degrees and deadlines that are actually current."
-label: "Client work — delivered via ZainTECH"
+summary: "A public chatbot on a Kuwaiti university's website where applicants check the status of their own application and get answers about deadlines that are actually still true."
+label: "Client work, delivered via ZainTECH"
 tech: ["n8n", "REST APIs", "RAG", "Scheduled ingestion"]
-outcome: "Live on the university's public website and used by real applicants, with content that stays current without anyone updating it by hand."
+outcome: "Live on the university's public website and used by real applicants, with content that stays current without anybody at the university maintaining it."
 featured: true
 order: 4
 ---
 
-Applying to university generates a specific kind of anxiety, and most of it resolves into two
-questions: *what's happening with my application*, and *when is the deadline for this thing*.
+Applying to university produces a very specific kind of anxiety, and almost all of it comes
+down to two questions. *What is happening with my application?* And *when is the deadline
+for this thing?*
 
-Both were answered by an admissions office fielding the same queries over and over.
+Before this, both of them were answered by an admissions office fielding the same handful of
+queries over and over, by email and phone, all through the season.
 
-## Two different problems in one interface
+<dl class="facts">
+<div><dt>status</dt><dd>Live on the public website, used by real applicants</dd></div>
+<div><dt>built in</dt><dd>n8n, as orchestration rather than a bespoke service</dd></div>
+<div><dt>the catch</dt><dd>Two systems that fail in completely different ways</dd></div>
+<div><dt>my scope</dt><dd>Built end to end</dd></div>
+</dl>
 
-From the outside this looks like one chatbot. Underneath it's two systems that fail in
-completely different ways.
+## Two systems behind one chat box
 
-**Personal questions** — *has my application been reviewed?* — need live data about one
-specific person. There's no corpus to retrieve from; the answer exists in the university's
-systems and changes without warning. This runs through **API-backed flows** that fetch the
-applicant's own record at the moment they ask.
+**I built this as two separate paths that happen to share a text box, because the two kinds
+of question have nothing in common except where they get typed.**
 
-**General questions** — *when do applications close for this programme?* — are the same for
-everyone, and come from published content. That's retrieval.
+*Has my application been reviewed?* needs live data about one specific person. There is no
+corpus to search. The answer lives in the university's own systems and changes without
+warning, so that path calls their APIs and fetches the applicant's record at the moment they
+ask.
 
-Building them as one thing would have meant an assistant that either hallucinated application
-statuses or gave stale deadlines. Splitting them meant each could be wrong in only its own way.
+*When do applications close for this programme?* is the same answer for everybody and comes
+from published content, so that path is ordinary RAG over the university's own pages.
 
-## The staleness problem
+Building them as one thing would have given me an assistant that either invents application
+statuses or quotes stale deadlines, and probably both. Keeping them apart means each path
+can only be wrong in its own way, and each one is fixable without touching the other.
 
-The second failure mode is the one that quietly ruins chatbots like this.
+## Content that does not go stale
 
-Ingest a university's programme pages once and you have a system that is accurate on launch
-day and increasingly wrong afterwards. Dates move. Programmes change. Requirements get
-amended. Nobody notices until an applicant acts on something that stopped being true two
-months ago — and for admissions deadlines, that's a real consequence for a real person.
+**The knowledge base refreshes itself on a schedule, so nobody at the university has to
+remember to update the chatbot.**
 
-So ingestion runs on a **polling job** that re-reads source content on a schedule and refreshes
-what the assistant retrieves from. Nobody at the university maintains the chatbot's knowledge
-by hand, because a process that depends on someone remembering to update it is a process that
-will eventually be forgotten.
+This is the failure mode that quietly ruins chatbots like this one. Ingest a university's
+programme pages once and you have something accurate on launch day and slowly wrong
+afterwards. Dates move. Programmes change. Entry requirements get amended. Nobody notices
+until an applicant acts on something that stopped being true two months ago, and for an
+admissions deadline that has a real consequence for a real person.
 
-## Why n8n
+So ingestion runs on a polling job that re-reads the source content on a schedule and
+refreshes what the assistant answers from. Any process that depends on somebody remembering
+to maintain it is a process that will eventually be forgotten, especially outside admissions
+season when nobody is thinking about the chatbot at all.
 
-The whole thing is built in **n8n** rather than as a bespoke service, which was the right
-call for the shape of this problem.
+## Why n8n was the right call here
 
-Most of the work here is orchestration: call an API, branch on the result, fetch content,
-re-ingest on a schedule, route a message down one path or another. That's what n8n is good at,
-and it leaves the client with something their own team can inspect and extend without needing
-the engineer who built it.
+**I built the whole thing in n8n rather than as a bespoke service, and I would make the same
+choice again for this shape of problem.**
 
-The trade-off is less control than hand-written code. For a system whose complexity lives in
-the wiring rather than the algorithms, that trade was worth making.
+Almost all of the work is orchestration. Call an API, branch on what comes back, fetch
+content, re-ingest on a schedule, send a message down one path or the other. That is exactly
+what n8n is for, and it meant I could hand over something the university's own team can open
+up, read, and extend without needing me.
+
+The trade is less control than hand written code, which would matter a great deal on a
+system whose difficulty lived in its algorithms. Here the difficulty lives in the wiring, so
+the client got a system they can actually own.

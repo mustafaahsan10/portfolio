@@ -121,6 +121,23 @@ altitude.
 - No marketing language. No "leveraged", "cutting-edge", "seamlessly", "robust".
 - Target 600-900 words.
 
+### Section shape: open on the build, end on the win
+
+Every `##` section follows the same arc, and this matters more than it sounds.
+
+- **Open with what I built**, in the first sentence, as the bolded lead. Not with
+  what went wrong. A section that opens on the problem tends to spend itself
+  there and treat the solution as an afterthought.
+- **The middle** carries the problem, the mechanism, and crucially *why the fix
+  works*. Describing what I built without explaining why it solves the problem
+  leaves the reader with a list of components.
+- **End on what the work achieved.** Never end a section on a mistake, a failed
+  experiment, or a piece of infrastructure trivia. Endings carry weight and get
+  remembered. A failed experiment can appear mid-paragraph as a tuning aside, but
+  it is not the last thing a reader should see.
+- Never append a technology name to the end of a section just to get it
+  mentioned. Work it into an earlier sentence instead.
+
 ### Voice: it must not read as machine-written
 
 This matters as much as the content. Specific rules, all of them non-negotiable:
