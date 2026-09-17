@@ -1,43 +1,49 @@
-# Astro Starter Kit: Minimal
+# Portfolio
+
+Personal engineering portfolio for Mustafa Ahsan. Static Astro site on Cloudflare
+Workers, with one server-rendered route for the "Ask my portfolio" assistant.
+
+## Running it
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npx playwright install chromium   # needed once, to render diagrams at build time
+npm run dev                       # http://localhost:4321
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`astro dev --background` runs the dev server detached; manage it with
+`astro dev stop`, `astro dev status` and `astro dev logs`.
 
-## 🚀 Project Structure
+## How it fits together
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Content lives in two places.** `src/config.ts` holds identity, nav, skills and
+  socials. Each project is a Markdown file in `src/content/projects/`, validated
+  against the schema in `src/content.config.ts`.
+- **Everything is prerendered** except `src/pages/api/chat.ts`, which runs on the
+  Cloudflare Workers AI binding declared in `wrangler.jsonc`.
+- **Three React islands**: the assistant, the contact form and the command
+  palette. Everything else is `.astro` and ships no JavaScript.
+- **Architecture diagrams** are ```mermaid fences in the case studies, rendered to
+  inline SVG at build time by `rehype-mermaid`, so no mermaid runtime reaches the
+  browser. This is why the build needs Chromium. If it is missing, diagrams fall
+  back to their source block rather than failing the build.
+- **The assistant's knowledge base** is `src/data/assistant.ts`. It runs
+  server-side only and must be kept in step with the project Markdown.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Writing a case study
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+`docs/case-study-prompt.md` is a prompt to run inside a project repo. It
+investigates the codebase, pauses for corrections, then writes a `CASE-STUDY.md`
+matching the content schema, including an architecture diagram. It also encodes
+the house rules: project altitude rather than bug post-mortems, first person, no
+dashes, sections that open on what was built and end on what it achieved.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+`docs/effort-audit-prompt.md` ranks a repo's subsystems by git history and churn,
+for reconstructing a project you no longer remember in detail.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deploying
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Cloudflare Workers Builds runs `npm run build`, which installs Chromium before
+building. The adapter emits the resolved deploy config into `dist/`, so
+`npx wrangler deploy` needs no dashboard changes.

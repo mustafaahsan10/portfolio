@@ -28,6 +28,9 @@ export default defineConfig({
         rehypeMermaid,
         {
           strategy: 'inline-svg',
+          // If Chromium is unavailable the page still builds; the diagram falls
+          // back to its source block rather than taking the whole deploy down.
+          errorFallback: (element) => element,
           // Load the real font into the headless browser. Without this, boxes
           // are measured in Chromium's fallback font and then displayed in
           // Geist Mono, which is wider — so labels overflow their boxes.

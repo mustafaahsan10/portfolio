@@ -50,6 +50,11 @@ export default function CommandPalette({
     setOpen(false);
     window.location.href = url;
   }
+  // Links off the site open in a new tab; navigating away loses the visitor.
+  function openExternal(url: string) {
+    setOpen(false);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
   function copyEmail() {
     setOpen(false);
     navigator.clipboard?.writeText(email);
@@ -101,13 +106,13 @@ export default function CommandPalette({
 
           <Command.Group heading="Links & actions">
             <Command.Item onSelect={copyEmail}>Copy email address</Command.Item>
-            <Command.Item value="github" onSelect={() => navigate(github)}>
+            <Command.Item value="github" onSelect={() => openExternal(github)}>
               GitHub
             </Command.Item>
-            <Command.Item value="linkedin" onSelect={() => navigate(linkedin)}>
+            <Command.Item value="linkedin" onSelect={() => openExternal(linkedin)}>
               LinkedIn
             </Command.Item>
-            <Command.Item value="resume cv" onSelect={() => navigate(resumeUrl)}>
+            <Command.Item value="resume cv" onSelect={() => openExternal(resumeUrl)}>
               Résumé (PDF)
             </Command.Item>
           </Command.Group>

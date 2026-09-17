@@ -11,8 +11,7 @@ export const site = {
   tagline:
     "I turn large language models into products people actually use, from retrieval and agents to the interfaces that make them click.",
 
-  // TODO: confirm the email you want publicly shown on the contact CTA.
-  // This will be visible on your live site.
+  // Shown publicly on the contact CTA and in the command palette.
   email: "mustafaahsan2002@gmail.com",
 
   resumeUrl: "/resume.pdf",

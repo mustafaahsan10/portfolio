@@ -52,15 +52,15 @@ const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
   document.querySelectorAll<HTMLElement>(".lite-yt").forEach((el) => {
     el.addEventListener("click", () => activate(el), { once: true });
-    el.addEventListener(
-      "keydown",
-      (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          activate(el);
-        }
-      },
-      { once: true },
-    );
+    // Not { once: true }: that removes the listener on any key, so pressing Tab
+    // or an arrow first would permanently kill keyboard activation.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        el.removeEventListener("keydown", onKey);
+        activate(el);
+      }
+    };
+    el.addEventListener("keydown", onKey);
   });
 </script>
