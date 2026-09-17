@@ -59,20 +59,33 @@ context. It never adds the document itself.
 
 ## Not trusting my own query rewriting
 
-Agents type short, thin queries. *Roaming.* *Data plans.* Rewriting those into something
-fuller is the standard move, and it introduces a quiet failure: the rewrite varies from run
-to run, and a bad one builds a candidate pool that simply does not contain the right
-document. I watched a question about handling a non subscriber caller produce a pool that
-had dropped the customer handling policy and kept a lexically similar page about call
-logging.
+Agents type short, thin queries. *Roaming.* *Data plans.* The standard move is to rewrite
+those into something fuller before searching, and most of the time it works. The problem is
+the times it does not. A rewrite comes out of a model, so it varies between runs, and a bad
+one builds a candidate pool that simply does not contain the right document. No amount of
+good reranking rescues that, because the document was never in the pool to rank.
 
-The fix is not a better rewrite. It is refusing to depend on one. Three searches run
-independently: one over the rewritten query, one keyword search, and one over the raw query
-exactly as the agent typed it. They are fused before a single rerank.
+**So I stopped letting any single phrasing of the question decide what gets considered.**
+Three searches run at the same time, independently of each other. One uses the rewritten
+query. One is a keyword search over the exact terms the agent typed. One is a plain
+similarity search over the raw query, untouched. Each returns its own ranked list, and I
+merge all three into a single pool before anything gets scored.
 
-The raw arm pulls fifty candidates. I tried a hundred and it got worse, because the extra
-weak chunks shifted the reranker's scoring and pushed genuinely relevant documents out of
-the window. More recall bought less precision, which was not what I expected.
+What makes that work is that a document only has to be found by one of them. If the rewrite
+drifts, the raw query still finds it. If the agent used internal wording that appears
+nowhere else, the keyword arm catches it. If they typed something too thin to match anything
+literally, the rewrite is what carries it. Three different ways of being wrong, and they are
+not wrong about the same things.
+
+Merging before the rerank rather than after is the other half of it. The reranker then
+scores every candidate against the original question on one scale, so a document rescued by
+the raw arm competes on equal terms instead of arriving with a score that means something
+different from everyone else's.
+
+One tuning detail caught me out. The raw arm pulls fifty candidates, and I tried a hundred
+expecting better coverage. It was worse. The extra weak chunks shifted the distribution the
+reranker was scoring across and pushed genuinely relevant documents out of the final
+window, so I put it back to fifty.
 
 ## Caching answers without answering the opposite question
 
