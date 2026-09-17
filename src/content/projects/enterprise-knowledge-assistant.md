@@ -99,11 +99,11 @@ hold their place in the final answer, pulled back in if the boosting pushed them
 Without it the system would confidently report that it could not find documents which had
 ranked first before any of the reweighting touched them.
 
-Rather than bet on one search, I run four at once. A hypothetical answer embedding helps on
-prose and drifts badly on tables. Keyword search catches exact terminology and misses
-paraphrase. An unfiltered pass rescues whatever the scoping dropped. Everything merges
-before a single **Cohere** rerank, so it is all scored on one scale and a rescued document
-competes fairly against the rest. It all sits in **PostgreSQL** with **pgvector**.
+All of it sits in **PostgreSQL** with **pgvector**, and rather than bet on one search, I run
+four at once. A hypothetical answer embedding helps on prose and drifts badly on tables.
+Keyword search catches exact terminology and misses paraphrase. An unfiltered pass rescues
+whatever the scoping dropped. Everything merges before a single **Cohere** rerank, so it is
+all scored on one scale and a rescued document competes fairly against the rest.
 
 ```mermaid
 flowchart TD
@@ -126,15 +126,15 @@ flowchart TD
 **Nobody updates any of this by hand.** A scheduled poller watches each company's SharePoint
 for new and changed documents and queues them onto Celery for re-ingestion, so the index
 follows the corpus on its own. That is also why the permissions bug above mattered as much
-as it did. Re-ingestion is not a one off migration. It runs continuously.
+as it did. Re-ingestion is not a one off migration. It runs continuously, on **Azure
+Kubernetes Service**, scaling out when the load calls for it.
 
 The pipeline reads every page of every document with a vision model, which is slow, and
 slow work breaks assumptions everywhere else. Most of what I had to fix came from that:
 tasks getting killed before they finished and then requeueing forever, database connections
 dropped while a document was still being read, one oversized PDF able to take a worker down
 with it. None of it is interesting on its own. Together it is the difference between a
-pipeline that demos and one that runs without anybody watching it. The whole thing runs on
-**Azure Kubernetes Service** and scales out when the load calls for it.
+pipeline that demos and one that runs without anybody watching it.
 
 ## Answering isn't finishing
 

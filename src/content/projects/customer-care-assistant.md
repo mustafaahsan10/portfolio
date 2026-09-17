@@ -82,10 +82,14 @@ scores every candidate against the original question on one scale, so a document
 the raw arm competes on equal terms instead of arriving with a score that means something
 different from everyone else's.
 
-One tuning detail caught me out. The raw arm pulls fifty candidates, and I tried a hundred
-expecting better coverage. It was worse. The extra weak chunks shifted the distribution the
-reranker was scoring across and pushed genuinely relevant documents out of the final
-window, so I put it back to fifty.
+One tuning detail caught me out along the way. The raw arm pulls fifty candidates, and I
+tried a hundred expecting better coverage. It was worse: the extra weak chunks shifted the
+distribution the reranker was scoring across and pushed genuinely relevant documents out of
+the final window. Fifty is what shipped.
+
+What all of this bought is that no single component decides what an answer can be drawn
+from any more. A rewrite that drifts is now one arm having an off day, rather than a wrong
+answer read out to a customer.
 
 ## Caching answers without answering the opposite question
 
