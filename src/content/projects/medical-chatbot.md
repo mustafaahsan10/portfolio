@@ -24,7 +24,9 @@ Monday, wants to be tested on Tuesday, and on Wednesday just wants to see the di
 Most study tools pick one of those and make you go elsewhere for the rest.
 
 Thymus Alpha does all of them from one chat box, and every answer is grounded in a curated
-medical corpus rather than whatever the model happens to remember.
+medical corpus rather than whatever the model happens to remember. The backend is
+**FastAPI**, handling routing, retrieval and the quiz, diagram and video services, with a
+**Next.js** and **React** front end for the chat itself.
 
 <dl class="facts">
 <div><dt>reach</dt><dd>Used by 5,000+ medical students</dd></div>
@@ -72,6 +74,3 @@ Without that check a quiz generator converges. Ask it about the same topic three
 you get the same three questions with the wording shuffled, which is the point where a
 student stops using it. I track what has already been asked and steer away from it, which keeps
 practice worth coming back to, which for a study tool is the only metric that really counts.
-
-The backend is **FastAPI**, handling routing, retrieval and the quiz, diagram and video
-services, with a **Next.js** and **React** front end for the chat itself.
