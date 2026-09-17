@@ -21,16 +21,14 @@ export default defineConfig({
     // Shiki claims every fenced block before rehype plugins run, so ```mermaid
     // has to opt out of highlighting for rehype-mermaid to see it at all.
     syntaxHighlight: { type: 'shiki', excludeLangs: ['mermaid'] },
-    // Renders each diagram to SVG at build time in headless Chromium, so no
-    // mermaid runtime ships to the browser.
+    // Only used by `npm run diagrams`, which renders diagrams locally so their
+    // SVG can be committed. The deployed build needs no browser: published case
+    // studies carry their SVG inline, with the mermaid source in a comment.
     rehypePlugins: [
       [
         rehypeMermaid,
         {
           strategy: 'inline-svg',
-          // If Chromium is unavailable the page still builds; the diagram falls
-          // back to its source block rather than taking the whole deploy down.
-          errorFallback: (element) => element,
           // Load the real font into the headless browser. Without this, boxes
           // are measured in Chromium's fallback font and then displayed in
           // Geist Mono, which is wider — so labels overflow their boxes.

@@ -7,10 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "playwright install chromium; astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-types": "wrangler types"
+    "generate-types": "wrangler types",
+    "diagrams": "playwright install chromium && astro build && node scripts/inline-diagrams.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.2",
