@@ -5,7 +5,7 @@ label: "Client work — delivered via ZainTECH"
 tech: ["n8n", "REST APIs", "RAG", "Scheduled ingestion"]
 outcome: "Live on the university's public website and used by real applicants, with content that stays current without anyone updating it by hand."
 featured: true
-order: 3
+order: 4
 ---
 
 Applying to university generates a specific kind of anxiety, and most of it resolves into two

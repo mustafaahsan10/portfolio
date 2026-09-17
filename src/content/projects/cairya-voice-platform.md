@@ -5,7 +5,7 @@ label: "Client work — AxonBuild"
 tech: ["Python", "FastAPI", "Qdrant", "Whoosh", "Hybrid search", "Next.js", "React"]
 outcome: "A retrieval engine and knowledge-management layer that let each tenant bring their own corpus to a shared voice platform."
 featured: false
-order: 5
+order: 6
 ---
 
 Cairya is a voice-driven AI companion running on VR and web. It was built by a team; my scope

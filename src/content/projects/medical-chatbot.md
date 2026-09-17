@@ -5,7 +5,7 @@ tech: ["Python", "FastAPI", "OpenAI (GPT-4o-mini)", "Qdrant", "Next.js", "React"
 outcome: "An end-to-end medical study assistant that combines grounded Q&A, auto-generated quizzes, and multimodal (diagram + bilingual video) retrieval in one flow — used by 5,000+ students."
 label: "Client work — AxonBuild"
 featured: true
-order: 4
+order: 5
 screenshots:
   - src: "/projects/medical-chatbot/01-home.jpg"
     alt: "Home screen — pick a topic or ask your own question"
