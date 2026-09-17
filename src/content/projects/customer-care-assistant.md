@@ -4,7 +4,7 @@ summary: "A retrieval assistant for call centre agents, where a good chunk of th
 label: "Client work, delivered via ZainTECH"
 tech: ["Python", "FastAPI", "LangGraph", "PostgreSQL + pgvector", "Cohere Rerank", "Azure OpenAI", "Redis + Celery", "Langfuse", "Kubernetes (AKS)"]
 role: "Built end to end: retrieval pipeline, the agent, caching, ingestion and observability."
-outcome: "Running in production for frontline support staff, answering from roughly 1,700 knowledge base items with withdrawn content handled explicitly rather than hidden."
+outcome: "In production with frontline agents after two months of work, replacing the manual SharePoint search they used to do while a customer waited on the line."
 featured: true
 order: 3
 ---
@@ -18,9 +18,16 @@ Quoting one of those to a paying customer is a worse outcome than the assistant 
 does not know. That is the constraint the whole thing is built around, and most of the
 decisions I made only make sense in light of it.
 
+Before this existed, the agent searched SharePoint by hand, mid-call, while the customer
+waited. That is the thing worth holding on to. Everything here is happening inside a pause
+in a live conversation, which is why speed and correctness pull against each other so hard
+in this system, and why I could not simply make it more careful until it was right.
+
 <dl class="facts">
-<div><dt>status</dt><dd>In production with frontline support staff</dd></div>
+<div><dt>status</dt><dd>In production with frontline agents</dd></div>
+<div><dt>built</dt><dd>Two months</dd></div>
 <div><dt>corpus</dt><dd>~1,700 knowledge base items</dd></div>
+<div><dt>replaced</dt><dd>Searching SharePoint by hand, mid-call</dd></div>
 <div><dt>the problem</dt><dd>Much of it describes offers that no longer exist</dd></div>
 <div><dt>my scope</dt><dd>All application code, retrieval through observability</dd></div>
 </dl>
@@ -142,4 +149,5 @@ Judging that needed a number the tracing library does not give you. A model's ow
 first token leaves out analysis and retrieval, which is most of the wait. So the API layer
 records time to first token as the agent experiences it, measured from the moment the
 request opens to the first token reaching their screen. That is the number that matters
-when somebody is holding a phone.
+when somebody is holding a phone, and it is the only one I trusted when deciding what the
+system could afford to do.
