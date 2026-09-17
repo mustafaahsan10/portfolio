@@ -1,42 +1,61 @@
-// Re-inlines build-rendered Mermaid SVGs back into the case study Markdown.
+// Renders each src/diagrams/<slug>.mmd into the matching case study Markdown as
+// inline SVG.
 //
-// Diagrams are rendered at author time rather than build time, because the
-// Cloudflare build image has no Chromium and a failed render silently produced
-// pages with no body at all. Run `npm run diagrams` after editing a diagram.
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+// Diagrams are rendered here, at author time, rather than during the deployed
+// build. Cloudflare's build image has no Chromium, and a failed render does not
+// fail the build: it silently produces pages with no body. Keeping the render
+// local means the deploy never needs a browser.
+//
+// The Markdown holds only the rendered <svg>. The mermaid source lives in
+// src/diagrams/, because a fenced block inside an HTML comment does not survive
+// the Markdown processor: the blank line ends the comment and the rest of the
+// document leaks out as literal text.
+//
+// Usage: npm run diagrams
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 
-const PROJECTS = "src/content/projects";
-let changed = 0;
+const SVG_RE = /<svg[\s\S]*?<\/svg>/;
+const jobs = readdirSync("src/diagrams")
+  .filter((f) => f.endsWith(".mmd"))
+  .map((f) => f.replace(/\.mmd$/, ""))
+  .filter((slug) => existsSync(`src/content/projects/${slug}.md`));
 
-for (const file of readdirSync(PROJECTS).filter((f) => f.endsWith(".md"))) {
-  const slug = file.replace(/\.md$/, "");
-  const md = join(PROJECTS, file);
-  let source = readFileSync(md, "utf8");
-  if (!source.includes("```mermaid")) continue;
+if (!jobs.length) {
+  console.log("No diagrams to render.");
+  process.exit(0);
+}
 
-  let html;
-  try {
-    html = readFileSync(`dist/client/projects/${slug}/index.html`, "utf8");
-  } catch {
-    console.warn(`  skipped ${slug}: no build output, run astro build first`);
-    continue;
+const originals = new Map();
+try {
+  // Put the mermaid fences back temporarily so rehype-mermaid can render them.
+  for (const slug of jobs) {
+    const path = `src/content/projects/${slug}.md`;
+    const md = readFileSync(path, "utf8");
+    originals.set(path, md);
+    const fence = "```mermaid\n" + readFileSync(`src/diagrams/${slug}.mmd`, "utf8").trim() + "\n```";
+    if (!SVG_RE.test(md)) throw new Error(`${slug}: no <svg> placeholder to replace`);
+    writeFileSync(path, md.replace(SVG_RE, fence));
   }
 
-  const start = html.indexOf("<svg");
-  const end = html.indexOf("</svg>", start);
-  if (start === -1 || end === -1) {
-    console.warn(`  skipped ${slug}: no rendered svg found`);
-    continue;
-  }
-  const svg = html.slice(start, end + "</svg>".length);
+  console.log("Rendering diagrams in headless Chromium...");
+  execFileSync("npx", ["astro", "build"], { stdio: "inherit" });
 
-  // Replace the previously inlined SVG that follows the diagram comment.
-  const next = source.replace(/(-->\n\n)<svg[\s\S]*?<\/svg>/, `$1${svg}`);
-  if (next !== source) {
-    writeFileSync(md, next);
-    console.log(`  updated ${slug} (${svg.length} bytes)`);
-    changed++;
+  for (const slug of jobs) {
+    const path = `src/content/projects/${slug}.md`;
+    const html = readFileSync(`dist/client/projects/${slug}/index.html`, "utf8");
+    const svg = html.match(SVG_RE);
+    if (!svg) throw new Error(`${slug}: build produced no SVG, is Chromium installed?`);
+    const fenced = readFileSync(path, "utf8");
+    writeFileSync(path, fenced.replace(/```mermaid[\s\S]*?```/, svg[0]));
+    originals.delete(path);
+    console.log(`  ${slug}: ${svg[0].length} bytes inlined`);
+  }
+} finally {
+  // Never leave a Markdown file holding a fence that the deployed build cannot render.
+  for (const [path, md] of originals) {
+    writeFileSync(path, md);
+    console.error(`  restored ${path} after failure`);
   }
 }
-console.log(changed ? `\n${changed} diagram(s) updated.` : "\nNo diagrams changed.");
+console.log("\nRebuild to pick the diagrams up: npm run build");

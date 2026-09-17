@@ -1,0 +1,13 @@
+flowchart TD
+    Q["User question"] --> A["Query analysis"]
+    A --> V["Vector search · HNSW"]
+    A --> K["Keyword search · tsvector"]
+    A --> H["Hypothetical-answer search"]
+    A --> U["Unfiltered pass"]
+    V -->|"permission-joined"| M["Merge into one pool"]
+    K -->|"permission-joined"| M
+    H -->|"novel chunks only"| M
+    U -->|"novel chunks only"| M
+    M -->|"one scale"| R["Cohere rerank"]
+    R --> B["Metadata boosts above a relevance floor"]
+    B --> C["Answer context"]

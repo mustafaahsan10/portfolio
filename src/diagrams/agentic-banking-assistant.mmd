@@ -1,0 +1,9 @@
+flowchart TD
+    U["Customer turn"] --> G["Deterministic pre-checks"]
+    G -->|"turn already decided"| S["Streaming output gates"]
+    G -->|"needs interpretation"| R["LLM intent router"]
+    R -->|"informational"| K["Retrieval agent"]
+    R -->|"money movement"| P["Payment agents"]
+    K -->|"grounded answer"| S
+    P -->|"confirmed action"| S
+    S --> OUT["Token stream to customer"]
