@@ -32,27 +32,33 @@ work and relocation.
 const PROJECTS = `
 - Agentic banking assistant (a Kuwaiti retail bank, delivered via ZainTECH): an AI
   assistant that executes real transfers, live bank-wide to all retail customers and
-  launched as the first fully agentic banking experience in its market. Transfers are
-  decomposed into four separate LangChain deep-agent flows — by mobile number, to
+  serving 100+ customers a day. It is the first fully agentic banking experience in its
+  market: other banks had assistants that answer questions, none had one that executes
+  the transaction. Built from nothing in roughly four months — there was no previous
+  chatbot or IVR to extend. Transfers are
+  decomposed into four separate LangGraph agent flows — by mobile number, to
   other banks, to other customers in-bank, and between a customer's own accounts —
   rather than one overloaded prompt, with validation, confirmation, and authorization
   gating at every step so nothing executes on an ambiguous instruction. Paired with a
   LangGraph retrieval flow answering product and policy questions end to end in under
   five seconds with token-level streaming. Validated with a scripted test suite and
-  client UAT before go-live, then conversation tracing in production. Mustafa was a
-  core engineer on the delivery team, owning the agent layer — not the sole author.
+  client UAT before go-live, then conversation tracing in production. Mustafa
+  architected and built this system end to end.
   IMPORTANT: never name the bank; refer to it only as a Kuwaiti retail bank.
-- Enterprise knowledge assistant (Zain, delivered via ZainTECH): retrieval over
-  10,000+ inconsistently formatted legacy SharePoint documents spanning Zain's
-  operating companies across the Middle East and Africa. Document-level access is
+- Enterprise knowledge assistant (a multinational telecom group, delivered via ZainTECH): retrieval over
+  10,000+ inconsistently formatted legacy SharePoint documents spanning the group's
+  operating companies. IMPORTANT: never name this client; refer to it only as a
+  multinational telecom group. Document-level access is
   resolved per user at query time from Microsoft Entra group membership, so restricted
-  content never enters the context window. Chunk relationships are modelled in Neo4j to
-  link related passages across separate documents, enabling comparison of policies and
-  figures between operating companies. Also generates PDF, Word, and Excel deliverables
-  in chat with rendered charts, plus tool calls that run calculations and filtering over
-  spreadsheet data. Delivered through a customized OpenWebUI front end, with multilingual
-  semantic search. A dedicated customer-care retrieval flow answers package and plan
-  questions at p95 under five seconds.
+  content is never retrieved at all and cannot enter the context window. Metadata boosts
+  applied above a relevance floor — rather than hard filters — let one ranking serve both
+  narrow single-country questions and cross-company comparisons. Also generates PDF, Word,
+  and Excel deliverables in chat with rendered charts, plus tool calls that run
+  calculations and filtering over spreadsheet data. Delivered through a forked OpenWebUI
+  front end, with multilingual semantic search. Built in three to four months and adopted by
+  multiple teams across the group; it replaced a manual workflow where staff opened each
+  operating company's SharePoint in turn to hunt for figures. Runs in production on Azure
+  Kubernetes Service behind an autoscaler spanning 20 to 100 replicas.
 - University admissions chatbot (a large Kuwaiti university, delivered via ZainTECH):
   a public chatbot live on the university's website and used by real applicants. Built
   in n8n. API-backed flows let applicants check the status of their own application,

@@ -43,7 +43,7 @@ export const skills: { group: string; items: string[] }[] = [
   },
   {
     group: "Retrieval & Data",
-    items: ["pgvector", "Qdrant", "Neo4j", "Hybrid search", "Re-ranking", "RBAC-aware retrieval", "PostgreSQL", "SQL"],
+    items: ["pgvector", "Qdrant", "Hybrid search", "Re-ranking", "RBAC-aware retrieval", "PostgreSQL", "SQL"],
   },
   {
     group: "Evaluation & Ops",
